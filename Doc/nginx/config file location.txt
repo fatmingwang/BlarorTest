@@ -1,0 +1,12 @@
+first create website rule
+	paste blazor.conf to /etc/nginx/conf.d
+
+	or sudo nano /etc/nginx/conf.d/blazor.conf paste content.
+second test config file is okay?
+	sudo nginx -t
+
+
+third sudo nginx -s reload
+
+fouth  enable specific port  (https://www.digitalocean.com/community/tutorials/opening-a-port-on-linux)
+	sudo firewall-cmd --add-port=8394/tcp

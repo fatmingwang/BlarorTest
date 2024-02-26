@@ -1,0 +1,10 @@
+https://blogs.oracle.com/cloud-infrastructure/post/host-your-microsoft-net-based-application-on-oci-oracle-linux
+
+
+sudo yum krb5-libs
+
+sudo yum libicu
+
+sudo yum openssl-libs
+
+sudo yum zlib

@@ -1,0 +1,19 @@
+chrome enable localhost
+
+
+chrome://flags/
+Allow invalid certificates for resources loaded from localhost
+
+
+
+https://aspnet.github.io/quickgridsamples/getstarted/
+
+
+Quick Grid
+dotnet add package Microsoft.AspNetCore.Components.QuickGrid
+
+
+
+Install .NET on Linux
+
+https://learn.microsoft.com/en-us/dotnet/core/install/linux

@@ -1,7 +1,54 @@
 ﻿@* https://www.youtube.com/watch?v=SjhzOauYC80&t=384s *@
+@* https://zetbit.tech/categories/asp-dot-net-core/54/make-get-request-to-api-with-blazor *@    
 
-<h3>GetRequest</h3>
+@* download file
+https://stackoverflow.com/questions/68393235/download-file-from-server-with-blazor-app *@
+
+@page "/GetRequest"
+
+<PageTitle>Index</PageTitle>
+
+<button @onclick="FetchData">Get Data</button>
+
+
+@if (todo != null)
+{
+    <h3>Title: @todo.title</h3>
+    <p>Completed: @todo.completed</p>
+}
+
+@if (m_strJsonContent != null)
+{
+    <p>Completed: @m_strJsonContent</p>
+}
+
 
 @code {
+    public Todo todo;
+    public string m_strJsonContent;
 
+    public HttpClient httpClient = new HttpClient();
+
+    public async Task FetchData()
+    {
+        //var l_Result = await httpClient.GetFromJsonAsync<Todo>("https://jsonplaceholder.typicode.com/todos/1");
+        //var l_Result = await httpClient.GetStringAsync("http://144.24.65.220/TimeStamp.json");
+        var l_Result = await httpClient.GetAsync("http://144.24.65.220/TimeStamp.json");
+        m_strJsonContent = l_Result.ToString();
+    }
+
+
+// {
+//   "userId": 1,
+//   "id": 1,
+//   "title": "delectus aut autem",
+//   "completed": false
+// }
+    public class Todo
+    {
+        public int userId { get; set; }
+        public int id { get; set; }
+        public string title { get; set; }
+        public bool completed { get; set; }
+    }
 }

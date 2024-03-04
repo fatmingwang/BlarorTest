@@ -1,0 +1,64 @@
+﻿@page "/QueryFilterData"
+
+
+
+<h3>QueryFilterData</h3>
+
+<label>
+    Select one or more cars:
+    <select @onchange="SelectedCarsChanged">
+        <option value="audi">Audi</option>
+        <option value="jeep">Jeep</option>
+        <option value="opel">Opel</option>
+        <option value="saab">Saab</option>
+        <option value="volvo">Volvo</option>
+    </select>
+</label>
+
+<button @onclick="Filter">Filter</button>
+
+@(m_bIsLoading)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    show results from query
+}
+
+
+@code 
+{
+    public bool m_bIsLoading;
+
+
+    async Task Filter()
+    {
+        m_bIsLoading = true;
+        await Task.Delay(1000);
+        //await FetchFromDb();
+        m_bIsLoading = false;
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        // model = new BrandModel
+        //     {
+        //         Id = 19,
+        //         ByCountryId = 1,
+        //         Countries = new List<ent.Country>
+        //     {
+        //         new ent.Country { Id = 1, Name = "Azerbaijan" },
+        //         new ent.Country { Id = 2, Name = "Turkey" }
+        //     },
+        //         IsActive = true,
+        //         Name = "Brand"
+        //     };
+    }
+    private void SelectedCarsChanged(ChangeEventArgs e)
+    {
+        if (e.Value is not null)
+        {
+            //SelectedCars = (string[])e.Value;
+        }
+    }
+}

@@ -1,0 +1,25 @@
+﻿@page "/AwaitShowSpinner"
+
+@* first add  <Spinner></Spinner>
+second add using BlazorSpinner; and  builder.Services.AddScoped<SpinnerService>(); in Program.cs file *@
+
+
+@inject BlazorSpinner.SpinnerService _spinnerService
+<Spinner></Spinner>
+<h3>AwaitShowSpinner</h3>
+
+<button @onclick="StartSpinner">Show loading circle indicator</button>
+
+
+@code
+{
+
+    async public Task StartSpinner()
+    {
+        _spinnerService.Show();
+
+        await Task.Delay(5000);
+
+        _spinnerService.Hide();
+    }
+}

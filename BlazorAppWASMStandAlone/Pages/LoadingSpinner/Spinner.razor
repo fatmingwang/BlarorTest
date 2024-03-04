@@ -1,4 +1,4 @@
-﻿@inject SpinnerService _spinnerService
+﻿@inject SpinnerService g_spinnerService
 @inject IJSRuntime JS
 <style>
 
@@ -45,6 +45,7 @@
 
 </style>
 
+@* https://learn.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/call-javascript-from-dotnet?view=aspnetcore-8.0 *@
 <script>
     window.LoadingTextChange = (e_strText) => 
     {
@@ -74,8 +75,8 @@
 
     protected override void OnInitialized()
     {
-        _spinnerService.OnShow += ShowLoadingSpinner;
-        _spinnerService.OnHide += HideLoadingSpinner;
+        g_spinnerService.OnShow += ShowLoadingSpinner;
+        g_spinnerService.OnHide += HideLoadingSpinner;
     }
 
     public void ShowLoadingSpinner()

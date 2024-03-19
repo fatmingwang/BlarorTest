@@ -10,6 +10,189 @@
     </QuickGrid>
 </div>
 
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paginator Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .paginator {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0px;
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .paginator button {
+            color: #f5f5f5;
+            border: none;
+            padding: 5px 10px;
+            margin: 0 5px;
+            cursor: pointer;
+            background-color: transparent;
+        }
+
+        .paginator button:hover {
+            color: #3498db;
+            background-color: #f5f5f5;
+        }
+
+        .paginator .disabled {
+            color: #ccc;
+            cursor: default;
+        }
+
+        .page-indicator {
+            margin: 0 0px;
+        }
+
+        input[type="number"] {
+            width: 50px;
+            margin-left: 10px;
+            padding: 5px;
+            text-align: center;
+            font-size: 14px;
+            border: 1px solid #ccc;
+        }
+
+        .paginator img {
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="paginator">
+        <button id="firstPage"><img src=@m_FirstPageIconFileName alt="First"></button>
+        <button id="prev5Page" class="disabled"><img src=@m_PreviousNPages alt="First"></button>
+        <button id="prevPage" class="disabled"><img src=@m_PreviousPage alt="First"></button>
+        <span class="page-indicator">Page <span id="currentPage">1</span></span>
+        <button id="nextPage"><img src=@m_NextPage alt="First" style="transform:rotate(180deg);"></button>
+        <button id="next5Page"><img src=@m_NextNPages style="transform:rotate(180deg);" alt="First"></button>
+        <button id="lastPage"><img src=@m_EndPageIconFileName style="transform:rotate(180deg);" alt="Last"></button>
+        <span>Go to Page:</span>
+        <input type="number" id="gotoPage" min="1" value="1" placeholder="Enter page number">
+        <button onclick="goToPage()">Go</button>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        let totalPage = 99;
+
+        let gotoInput = document.getElementById('gotoPage');
+        let currentPageIndicator = document.getElementById('currentPage');
+        let prev5Btn = document.getElementById('prev5Page');
+        let prevBtn = document.getElementById('prevPage');
+        let nextBtn = document.getElementById('nextPage');
+        let next5Btn = document.getElementById('next5Page');
+        let firstBtn = document.getElementById('firstPage');
+        let lastBtn = document.getElementById('lastPage');
+
+        function updateButtons() {
+            if (currentPage <= 1) {
+                firstBtn.classList.add('disabled');
+                prev5Btn.classList.add('disabled');
+                prevBtn.classList.add('disabled');
+            } else {
+                firstBtn.classList.remove('disabled');
+                prev5Btn.classList.remove('disabled');
+                prevBtn.classList.remove('disabled');
+            }
+
+            if (currentPage >= totalPage) {
+                nextBtn.classList.add('disabled');
+                next5Btn.classList.add('disabled');
+                lastBtn.classList.add('disabled');
+            } else {
+                nextBtn.classList.remove('disabled');
+                next5Btn.classList.remove('disabled');
+                lastBtn.classList.remove('disabled');
+            }
+        }
+
+        function goToPage() {
+            let gotoValue = parseInt(gotoInput.value);
+            if (gotoValue >= 1 && gotoValue <= totalPage) {
+                currentPage = gotoValue;
+                currentPageIndicator.textContent = currentPage;
+                updateButtons();
+            }
+        }
+
+        document.getElementById('firstPage').addEventListener('click', () => {
+            currentPage = 1;
+            currentPageIndicator.textContent = currentPage;
+            updateButtons();
+        });
+
+        document.getElementById('prevPage').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                currentPageIndicator.textContent = currentPage;
+                updateButtons();
+            }
+        });
+
+        document.getElementById('nextPage').addEventListener('click', () => {
+            if (currentPage < totalPage) {
+                currentPage++;
+                currentPageIndicator.textContent = currentPage;
+                updateButtons();
+            }
+        });
+
+        document.getElementById('lastPage').addEventListener('click', () => {
+            currentPage = totalPage;
+            currentPageIndicator.textContent = currentPage;
+            updateButtons();
+        });
+
+        document.getElementById('prev5Page').addEventListener('click', () => {
+            currentPage -= 5;
+            if (currentPage < 1) {
+                currentPage = 1;
+            }
+            currentPageIndicator.textContent = currentPage;
+            updateButtons();
+        });
+
+        document.getElementById('next5Page').addEventListener('click', () => {
+            currentPage += 5;
+            if (currentPage > totalPage) {
+                currentPage = totalPage;
+            }
+            currentPageIndicator.textContent = currentPage;
+            updateButtons();
+        });
+
+        updateButtons();
+    </script>
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* 
+
 <div class="page-buttons">
     Page:
     @if (pagination.TotalItemCount.HasValue)
@@ -25,12 +208,25 @@
             </button>
         }
     }
-</div>
+</div> *@
 
 @code 
 {
+
+    private string m_FirstPageIconFileName = "icon/FirstPageArrow.png";
+    private string m_EndPageIconFileName = "icon/FirstPageArrow.png";
+
+    private string m_PreviousPage = "icon/Previous.png";
+    private string m_NextPage = "icon/Previous.png";
+
+    private string m_PreviousNPages = "icon/Back5.png";
+    private string m_NextNPages = "icon/Back5.png";
+
     record Medal(int Total, int Gold, int Silver, int Bronze);
     record Country(string Name, Medal Medals);
+
+
+
 
     IQueryable<Country> FilteredCountries = new[]
     {

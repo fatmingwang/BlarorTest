@@ -64,22 +64,24 @@
             border: 1px solid #ccc;
         }
 
-        .paginator img {
+/*         .paginator img {
             width: 30px;
             height: 30px;
-        }
+        } */
     </style>
 </head>
 <body>
     <div class="paginator">
         <button id="firstPage"><img src=@m_FirstPageIconFileName alt="First"></button>
         <button id="prev5Page" class="disabled"><img src=@m_PreviousNPages alt="First"></button>
-        <button id="prevPage" class="disabled"><img src=@m_PreviousPage alt="First"></button>
+        <button id="prevPage" class="disabled" @onclick="@(() => GoToRelateivePage(-1))"><img src=@m_PreviousPage alt="First"></button>
         <span class="page-indicator">Page <span id="currentPage">1</span></span>
-        <button id="nextPage"><img src=@m_NextPage alt="First" style="transform:rotate(180deg);"></button>
+        <button id="nextPage" @onclick="@(() => GoToRelateivePage(1))"><img src=@m_NextPage alt="First" style="transform:rotate(180deg);"></button>
         <button id="next5Page"><img src=@m_NextNPages style="transform:rotate(180deg);" alt="First"></button>
         <button id="lastPage"><img src=@m_EndPageIconFileName style="transform:rotate(180deg);" alt="Last"></button>
+
         <span>Go to Page:</span>
+
         <input type="number" id="gotoPage" min="1" value="1" placeholder="Enter page number">
         <button onclick="goToPage()">Go</button>
     </div>
@@ -279,4 +281,22 @@
     private string? PageButtonClass(int pageIndex) => pagination.CurrentPageIndex == pageIndex ? "current" : null;
 
     private string? AriaCurrentValue(int pageIndex) => pagination.CurrentPageIndex == pageIndex ? "page" : null;
+
+    async Task GoToRelateivePage(int e_iValue)
+    {
+
+        int l_iNewIndex = pagination.CurrentPageIndex + e_iValue;
+        if (l_iNewIndex < 0)
+        {
+            l_iNewIndex = 0;
+        }
+        else
+        if (l_iNewIndex > pagination.LastPageIndex)
+        {
+            l_iNewIndex = pagination.LastPageIndex.Value;
+        }
+
+        await pagination.SetCurrentPageIndexAsync(l_iNewIndex);
+    }
+
 }

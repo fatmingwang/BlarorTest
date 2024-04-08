@@ -7,3 +7,9 @@ dotnet publish -c Release -r linux-x64
 https://blog.51cto.com/simadi/3144100
 
 https://www.youtube.com/watch?v=2EMlUw3rAWU
+
+
+below folders must move to wwwroot
+_framework
+_content
+css

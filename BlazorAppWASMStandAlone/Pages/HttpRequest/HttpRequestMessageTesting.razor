@@ -45,6 +45,19 @@ else
             using var responseStream = await response.Content.ReadAsStreamAsync();
             branches = await JsonSerializer.DeserializeAsync
                 <IEnumerable<GitHubBranch>>(responseStream);
+
+            var stream = responseStream;
+            {
+                var reader = new StreamReader(stream);
+                string responseValue = reader.ReadToEnd();
+                Console.WriteLine(responseValue);
+            }
+
+            
+
+
+
+
         }
         else
         {

@@ -1,4 +1,8 @@
-﻿@page "/GeneratePDFButton"
+﻿@* https://www.syncfusion.com/faq/blazor/general/how-do-i-generate-and-save-a-file-client-side-using-blazor *@
+
+@page "/GeneratePDFButton"
+
+
 
 @using BlazorAppWASMStandAlone.ToPdf
 
@@ -13,7 +17,15 @@
 {
     <p>Click the link below to download the PDF document.</p>
     <a href="@pdfPath" download>Download PDF</a>
+
+    <p>qoo</p>
+    <a href="path_to_file" download>Save1</a>
+    <a href="link_path_to_file" download="suggested_name">Save2</a>
+
 }
+
+
+
 
 @code {
     private string pdfPath;

@@ -1,0 +1,32 @@
+﻿@page "/GameDemo"
+
+<h3>GameDemo</h3>
+
+
+@for (int i = 0; i < 2; i++)
+{
+	var j = i;
+	<button @onclick="()=>OpenDemoiFrame(j)">@i</button>
+}
+
+
+@if (!string.IsNullOrEmpty(g_strGameUrl))
+{
+	<iframe src="@g_strGameUrl" width="960" height="540" title="Iframe Example"></iframe>
+}
+
+@code 
+{
+	private string g_strGameUrl;
+	private string[] g_strGameNameArray = ["./Baccarat/index.html", "./Baccarat/index.html"];
+	String l_strFishUrl = "";
+	String l_strFishBluffingGirls = "";
+
+	private void OpenDemoiFrame(int e_iValue)
+	{
+		if (e_iValue <= g_strGameNameArray.Length)
+		{
+			g_strGameUrl = g_strGameNameArray[e_iValue];
+		}
+	}
+}

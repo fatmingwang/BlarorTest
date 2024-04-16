@@ -3,7 +3,7 @@
 @page "/GeneratePDFButton"
 
 
-
+@inject IJSRuntime JS
 @using BlazorAppWASMStandAlone.ToPdf
 
 
@@ -12,23 +12,24 @@
 <p>Click the button below to generate a PDF document.</p>
 
 <button class="btn btn-primary" @onclick="GeneratePdf">Generate PDF</button>
-
-@if (!string.IsNullOrEmpty(pdfPath))
+<button @onclick="DownloadFileFromStream">
+    Download File From Stream
+</button>
+@if (!string.IsNullOrEmpty(g_strPDFPath))
 {
     <p>Click the link below to download the PDF document.</p>
-    <a href="@pdfPath" download>Download PDF</a>
+    <a href="@g_strPDFPath" download>Download PDF</a>
 
     <p>qoo</p>
     <a href="path_to_file" download>Save1</a>
     <a href="link_path_to_file" download="suggested_name">Save2</a>
-
 }
 
 
 
 
 @code {
-    private string pdfPath;
+    private string g_strPDFPath;
 
     private void GeneratePdf()
     {
@@ -37,9 +38,21 @@
         string body = "This is an example PDF document generated using iTextSharp.";
 
         PdfGenerator.GeneratePdf(fileName, title, body);
+
+
         string l_strCurrentDirectory = Directory.GetCurrentDirectory();
         Console.WriteLine(l_strCurrentDirectory);
-        pdfPath = Path.Combine(l_strCurrentDirectory, fileName);
-        Console.WriteLine(pdfPath);
+        g_strPDFPath = Path.Combine(l_strCurrentDirectory, fileName);
+        Console.WriteLine(g_strPDFPath);
+    }
+
+    private async Task DownloadFileFromStream()
+    {
+        string fileName = "example.pdf";
+        string title = "Example PDF Document";
+        string body = "This is an example PDF document generated using iTextSharp.";
+        Stream l_Stream = PdfGenerator.GetPDFStream(title, body);
+        using var streamRef = new DotNetStreamReference(l_Stream);
+        await JS.InvokeVoidAsync("downloadFileFromStream", fileName, streamRef);
     }
 }

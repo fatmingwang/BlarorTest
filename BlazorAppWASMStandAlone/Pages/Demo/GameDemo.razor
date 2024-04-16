@@ -1,12 +1,12 @@
 ﻿@page "/GameDemo"
-
+@inject IJSRuntime JS
 <h3>GameDemo</h3>
 
 
 @for (int i = 0; i < 2; i++)
 {
 	var j = i;
-	<button @onclick="()=>OpenDemoiFrame(j)">@i</button>
+	<button id="@i" @onclick="()=>OpenDemoiFrame(j)">@i</button>
 }
 
 
@@ -14,6 +14,26 @@
 {
 	<iframe src="@g_strGameUrl" width="960" height="540" title="Iframe Example"></iframe>
 }
+
+<script>
+	window.RemoveDemoButton = ()=>
+	{
+		console.log("window.RemoveDemoButton");
+		for (let i = 0; i < 2; i++)
+		{
+			const element = document.getElementById(i.toString());
+			if (element) 
+			{
+				element.remove();
+				console.log(i.toString());
+			}
+			else {
+				console.log(i.toString()+" failed");
+			}
+			
+		}
+	};
+</script>
 
 @code 
 {
@@ -27,6 +47,9 @@
 		if (e_iValue <= g_strGameNameArray.Length)
 		{
 			g_strGameUrl = g_strGameNameArray[e_iValue];
+			Console.WriteLine("qoooooo");
+			JS.InvokeAsync<string>("RemoveDemoButton");
+			Console.WriteLine("qoooooo222222");
 		}
 	}
 }

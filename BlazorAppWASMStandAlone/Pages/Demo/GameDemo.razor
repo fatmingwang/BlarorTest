@@ -6,49 +6,79 @@
 @for (int i = 0; i < 2; i++)
 {
 	var j = i;
-	<button id="@i" @onclick="()=>OpenDemoiFrame(j)">@i</button>
+	<button id="@i" @onclick="()=>OpenDemoiFrame(j)">@g_strGameNameArray[i]</button>
 }
 
 
 @if (!string.IsNullOrEmpty(g_strGameUrl))
 {
-	<iframe src="@g_strGameUrl" width="960" height="540" title="Iframe Example"></iframe>
+	<iframe src="@g_strGameUrl" width="1280" height="720" title="Iframe Example"></iframe>
 }
 
+@* <script src="Typescript/CommonFunction.js"/> *@
+
 <script>
-	window.RemoveDemoButton = ()=>
+	window.RemoveDemoButton = (e_iIndex)=>
 	{
+		//getCommonInstance().DownloadFile("qoo");
 		console.log("window.RemoveDemoButton");
 		for (let i = 0; i < 2; i++)
 		{
 			const element = document.getElementById(i.toString());
-			if (element) 
+			if (element && element.parentNode)
 			{
-				element.remove();
+				element.disabled = e_iIndex==i?true:false;
+				//element.parentNode.removeChild(element);
 				console.log(i.toString());
 			}
 			else {
 				console.log(i.toString()+" failed");
 			}
-			
 		}
 	};
+
 </script>
 
 @code 
 {
 	private string g_strGameUrl;
-	private string[] g_strGameNameArray = ["./Baccarat/index.html", "./Baccarat/index.html"];
-	String l_strFishUrl = "";
-	String l_strFishBluffingGirls = "";
-
-	private void OpenDemoiFrame(int e_iValue)
+	private string[] g_strGameNameArray = ["MODI demo", "BluffingGirl"];
+	private string[] g_strGameNameAddressArray = ["./EmptyProject/WASM.html", "./BluffingGirl/BluffingGirlWASM.html"];
+	int m_iIFrameWidth = 720;
+	int m_iIFrameHeifht = 1280;
+	protected override async Task OnInitializedAsync()
 	{
-		if (e_iValue <= g_strGameNameArray.Length)
+		//IJSObjectReference jsModule = await JS.InvokeAsync<IJSObjectReference>("import", "./typescript/CommonFunction.js");
+
+		//var module = await JS.InvokeAsync<IJSObjectReference>("import", "../Typescript/CommonFunction.js");
+		//var l_CommonInstance = await module.InvokeAsync<IJSObjectReference>("getCommonInstance");
+		//var l_CommonInstance = await JS.invokeMethodAsync("getCommonInstance");
+
+		//var l_CommonInstance = await JS.InvokeAsync<IJSObjectReference>("getCommonInstance");
+		//await l_CommonInstance.InvokeAsync<object>("DownloadFile", "qoo");
+		//var l_Object = await JS.InvokeAsync<object>("cCommonFunction.DownloadFile","qoo");
+		//var l_Object2 = l_CommonInstance;
+
+		//cCommon
+	}
+	private async void OpenDemoiFrame(int e_iValue)
+	{
+		//IJSObjectReference jsModule = await JS.InvokeAsync<IJSObjectReference>("import", "./typescript/CommonFunction.js");
+		if (e_iValue <= g_strGameNameAddressArray.Length)
 		{
-			g_strGameUrl = g_strGameNameArray[e_iValue];
+			if(e_iValue == 0)
+			{
+				m_iIFrameWidth = 1280;
+				m_iIFrameHeifht = 720;
+			}
+			else
+			{
+				m_iIFrameWidth = 720;
+				m_iIFrameHeifht = 1280;
+			}
+			g_strGameUrl = g_strGameNameAddressArray[e_iValue];
 			Console.WriteLine("qoooooo");
-			JS.InvokeAsync<string>("RemoveDemoButton");
+			JS.InvokeAsync<string>("RemoveDemoButton", e_iValue);
 			Console.WriteLine("qoooooo222222");
 		}
 	}

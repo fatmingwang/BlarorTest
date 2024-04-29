@@ -1,0 +1,36 @@
+https://learn.microsoft.com/en-us/visualstudio/javascript/tutorial-aspnet-with-typescript?view=vs-2022
+
+1.  nuget add  Microsoft.TypeScript.MSBuild.
+2.Right-click the project node and select Add > New Item. Choose the TypeScript JSON Configuration File, and then select Add.
+
+
+3.replace  configure file conten as
+
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es5",
+    "outDir": "wwwroot/js"
+  },
+  "include": [
+    "scripts/**/*"
+  ]
+}
+
+4.In Solution Explorer, right-click the project node and select Add > New Folder. Use the name scripts for the new folder.
+
+5.add some code to your js
+
+6.
+<script src="js/yourfile.js"></script>
+
+<div id="ts-example">
+    <br />
+    <button type="button" class="btn btn-primary btn-md" onclick="YourFunction()">
+        Click Me
+    </button>
+</div>

@@ -18,13 +18,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\Typescript\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\Typescript\CommonFunction.js" />
-    <None Include="wwwroot\Typescript\CommonFunction.js.map" />
-  </ItemGroup>
-
 </Project>

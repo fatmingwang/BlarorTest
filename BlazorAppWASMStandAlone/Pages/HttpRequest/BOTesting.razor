@@ -1,0 +1,22 @@
+﻿@inject BlazorSpinner.SpinnerService _spinnerService
+
+<h3>BOTesting</h3>
+
+
+<button class="btn btn-primary" @onclick="BOTestingClick">BO Login</button>
+
+@using BlazorAppWASMStandAlone.Services;
+
+@code 
+{
+	protected async Task BOTestingClick()
+	{
+		//_spinnerService.StaticShow(() => MyHttpRequest.Login());
+		_spinnerService.StaticShow(() => MyHttpRequest.InitDataAsyncTesting());
+	}
+	protected override async Task OnInitializedAsync()
+	{
+		
+	}
+
+}

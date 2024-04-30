@@ -1,7 +1,11 @@
 ﻿@page "/"
 
+@inject BlazorSpinner.SpinnerService _spinnerService
 
-<BlazorAppWASMStandAlone.Pages.Demo.GameDemo/>
+<BlazorAppWASMStandAlone.Pages.LoadingSpinner.Spinner/>
+@* <BlazorAppWASMStandAlone.Pages.HttpRequest.BOTesting/> *@
+<BlazorAppWASMStandAlone.Pages.Statement.QueryFilterData/>
+@* <BlazorAppWASMStandAlone.Pages.Demo.GameDemo/> *@
 @* <BlazorAppWASMStandAlone.Pages.Demo.CallTypeScript /> *@
 @* <BlazorAppWASMStandAlone.Pages.QucikGrid.QuickGridPaginator /> *@
 @* <BlazorAppWASMStandAlone.Pages.HttpRequest.HttpRequestMessageTesting/> *@
@@ -35,3 +39,11 @@
         new Person(12130, "Kenji Sato", new DateOnly(2004, 1, 9)),
     }.AsQueryable();
 } *@
+
+@code 
+{
+    protected override void OnInitialized()
+    {
+
+    }
+}

@@ -1,17 +1,25 @@
 ﻿@page "/QueryFilterData"
 
 
-
 <h3>QueryFilterData</h3>
 
 <label>
     Select one or more cars:
-    <select @onchange="SelectedCarsChanged">
+@*     <select @onchange="SelectedCarsChanged">
         <option value="audi">Audi</option>
         <option value="jeep">Jeep</option>
         <option value="opel">Opel</option>
         <option value="saab">Saab</option>
         <option value="volvo">Volvo</option>
+    </select> *@
+    <select @bind="model.ByCountryId">
+        @if (model?.Countries != null)
+        {
+            @foreach (var cnt in model.Countries)
+            {
+                <option value="@cnt.Id">@cnt.Name</option>
+            }
+        }
     </select>
 </label>
 
@@ -26,11 +34,25 @@ else
     show results from query
 }
 
+//https://stackoverflow.com/questions/58485439/select-box-binding-in-blazor
 
 @code 
 {
+    class Country
+    {
+        public int Id;
+        public string Name;
+    }
+    class BrandModel
+    {
+        public int Id;
+        public int ByCountryId;
+        public List<Country> Countries;
+        public bool IsActive;
+        public string Name;
+    }
     public bool m_bIsLoading;
-
+    BrandModel model = new BrandModel();
 
     async Task Filter()
     {
@@ -41,18 +63,23 @@ else
     }
     protected override async Task OnInitializedAsync()
     {
-        // model = new BrandModel
-        //     {
-        //         Id = 19,
-        //         ByCountryId = 1,
-        //         Countries = new List<ent.Country>
-        //     {
-        //         new ent.Country { Id = 1, Name = "Azerbaijan" },
-        //         new ent.Country { Id = 2, Name = "Turkey" }
-        //     },
-        //         IsActive = true,
-        //         Name = "Brand"
-        //     };
+        model = new BrandModel
+        {
+            Id = 19,
+            ByCountryId = 5,
+            Countries = new List<Country>
+            {
+                new Country { Id = 1, Name = "Azerbaijan" },
+                new Country { Id = 2, Name = "Turkey" },
+                new Country { Id = 3, Name = "333" },
+                new Country { Id = 4, Name = "44" },
+                new Country { Id = 5, Name = "55" },
+                new Country { Id = 6, Name = "66" },
+                new Country { Id = 7, Name = "77" },
+            },
+            IsActive = true,
+            Name = "Brand"
+        };
     }
     private void SelectedCarsChanged(ChangeEventArgs e)
     {

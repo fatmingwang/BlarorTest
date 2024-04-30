@@ -16,4 +16,3 @@ function greeter(person) {
 }
 var user = new Student("Fred", "M.", "Smith");
 //# sourceMappingURL=app.js.map
-console.log("app.js loaded!");

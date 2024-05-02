@@ -1,0 +1,37 @@
+﻿@page "/FilterSelect"
+@inject HttpClient Http
+
+@if(m_SelectNameAndSelectOptionTextMap != null)
+{
+    foreach(var item in m_SelectNameAndSelectOptionTextMap)
+    {
+        <h3>
+            <BlazorAppWASMStandAlone.CommonCompoment.MySelect m_strSelectLabel="@item.Key" m_SelectTextArray="@item.Value"/>
+        </h3>
+    }
+}
+
+@code 
+{
+    public List<string> m_SelectArrayName = new List<string> {"qoo","ooq","pp" };
+    public Dictionary<string, List<string>> m_SelectNameAndSelectOptionTextMap = new Dictionary<string, List<string>>()
+    {
+        {"qoo",new List<string>{"123","456"} },
+        {"666",new List<string>{"999","888"} }
+    };
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        string l_Data = await Http.GetStringAsync("sample-data/weather.json");
+        Console.WriteLine(l_Data);
+        //var forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+    }
+    private void SelectedCarsChanged(ChangeEventArgs e)
+    {
+        if (e.Value is not null)
+        {
+            //SelectedCars = (string[])e.Value;
+        }
+    }
+}

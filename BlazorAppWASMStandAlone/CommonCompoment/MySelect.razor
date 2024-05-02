@@ -1,0 +1,39 @@
+﻿@* 
+sample code
+<BlazorAppWASMStandAlone.CommonCompoment.MySelect m_strSelectLabel="@item.Key" m_SelectTextArray="@item.Value" /> 
+
+*@
+
+<label>
+    @m_strSelectLabel
+    @* https://stackoverflow.com/questions/67845122/how-to-get-value-from-select-option-and-at-the-same-time-use-onchange-to-do-a-f *@
+    <select @onchange="HandleOnChangeUnbound">
+        @if (m_SelectTextArray != null)
+        {
+            @foreach (string l_strName in m_SelectTextArray)
+            {
+                <option value="@l_strName">@l_strName</option>
+            }
+        }
+    </select>
+</label>
+
+@code
+{
+    //https://stackoverflow.com/questions/58485439/select-box-binding-in-blazor
+    [Parameter]
+    public string m_strSelectLabel { get; set; } = "Select";
+    [Parameter]
+    public List<string> m_SelectTextArray { get; set; }
+    public string m_strSelectedOption = "";
+
+    void HandleOnChangeUnbound(ChangeEventArgs args)
+    {
+        if (m_SelectTextArray != null)
+        {
+            Console.WriteLine("before " + m_strSelectedOption);
+            m_strSelectedOption = args.Value.ToString();
+            Console.WriteLine("after " + args.Value.ToString());
+        }
+    }
+}

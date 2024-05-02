@@ -1,0 +1,105 @@
+﻿@page "/MyQuickGrid"
+
+
+<div class="grid">
+    @if (m_QuickDataForShow != null)
+    {
+        <QuickGrid Items="@m_QuickDataForShow">
+            @foreach (var b in m_QuickDataForShow)
+            {
+            //Test(b);
+@*                 <PropertyColumn Title="1" Property="@(b=>b[0])" Sortable="true" Align="Align.Right" />
+                <PropertyColumn Title="1" Property="@(b=>b[1])" Sortable="true" Align="Align.Right" /> *@
+                @for (int i = 0; i < b.Count(); ++i)
+                {
+                    int l_iIndex = i;
+                    //this occur error have no idea why.
+                    //<PropertyColumn Title="@i.ToString()" Property="@(b=>b[i])" Sortable="true" Align="Align.Right" />
+                    <PropertyColumn Title="@m_strTitleList[i]" Property="@(b=>b[l_iIndex])" Sortable="true" Align="Align.Right" />
+                }
+                break;
+            }
+        </QuickGrid>
+    }
+</div>
+
+@* <div class="grid">
+    <QuickGrid Items="@FilteredCountries">
+        <PropertyColumn Title="Qoo" Property="@(e_FilteredCountries => e_FilteredCountries.Name)" Sortable="true" Class="country-name" />
+        <PropertyColumn Property="@(c => c.Medals.Gold)" Sortable="true" Align="Align.Right" />
+        <PropertyColumn Property="@(c => c.Medals.Silver)" Sortable="true" Align="Align.Right" />
+        <PropertyColumn Property="@(c => c.Medals.Bronze)" Sortable="true" Align="Align.Right" />
+        <PropertyColumn Property="@(c => c.Medals.Total)" Sortable="true" Align="Align.Right">
+        </PropertyColumn>
+    </QuickGrid>
+</div>
+ *@
+@code
+{
+    [Parameter]
+    public List<string> m_strTitleList { get; set; } = new List<string> { "qoo1", "qoo2" };
+    [Parameter]
+    public List<List<string>> m_GridDataListList { get; set; } = new List<List<string>>()
+    {
+        new List<string>{"1","2"},
+        new List<string>{"3","4"}
+    };
+
+    IQueryable<List<string>> m_QuickDataForShow;
+
+
+    record Medal(int Total, int Gold, int Silver, int Bronze);
+    record Country(string Name, Medal Medals);
+    IQueryable<Country>? itemsQueryable;
+
+    int minMedals;
+    int maxMedals = 120;
+
+    IQueryable<Country> FilteredCountries = new[]
+    {
+        new Country("qoo1",new Medal(90,1,1,3)),
+        new Country("qoo2",new Medal(8,2,1,3)),
+        new Country("qoo3",new Medal(7,3,1,3)),
+        new Country("qoo4",new Medal(6,4,1,3)),
+        new Country("qoo5",new Medal(5,5,1,3)),
+        new Country("qoo6",new Medal(4,6,1,3)),
+        new Country("qoo7",new Medal(3,7,1,3)),
+        new Country("qoo8",new Medal(2,8,1,3)),
+        new Country("qoo9",new Medal(1,9,1,3)),
+
+        new Country("1qoo1",new Medal(9,1,1,3)),
+        new Country("1qoo2",new Medal(8,2,1,3)),
+        new Country("1qoo3",new Medal(7,3,1,3)),
+        new Country("1qoo4",new Medal(6,4,1,3)),
+        new Country("1qoo5",new Medal(5,5,1,3)),
+        new Country("1qoo6",new Medal(4,6,1,3)),
+        new Country("1qoo7",new Medal(3,7,1,3)),
+        new Country("1qoo8",new Medal(2,8,1,3)),
+        new Country("1qoo9",new Medal(1,9,1,3)),
+
+        new Country("qoo12",new Medal(9,1,1,3)),
+        new Country("qoo22",new Medal(8,2,1,3)),
+        new Country("qoo32",new Medal(7,3,1,3)),
+        new Country("qoo42",new Medal(6,4,1,3)),
+        new Country("qoo52",new Medal(5,5,1,3)),
+        new Country("qoo62",new Medal(4,6,1,3)),
+        new Country("qoo72",new Medal(3,7,1,3)),
+        new Country("qoo82",new Medal(2,8,1,3)),
+        new Country("qoo92",new Medal(0,9,1,3)),
+
+    }.AsQueryable();
+
+    protected override async Task OnInitializedAsync()
+    {
+        m_QuickDataForShow = m_GridDataListList.AsQueryable();
+    }
+
+    protected void Test(Object e_Test)
+    {
+        var l_e_Test = e_Test;
+    }
+}
+
+
+
+

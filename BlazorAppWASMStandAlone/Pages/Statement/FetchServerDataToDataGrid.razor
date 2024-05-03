@@ -1,0 +1,19 @@
+﻿<h3>FetchServerDataToDataGrid</h3>
+
+<BlazorAppWASMStandAlone.CommonCompoment.MyQuickGrid m_GridDataListList="@m_GridDataListList" m_strTitleList="@m_strTitleList" />
+
+@code {
+    public List<List<string>> m_GridDataListList;
+    public List<string> m_strTitleList;
+
+    protected override async Task OnInitializedAsync()
+    {
+        m_GridDataListList = new List<List<string>>()
+        {
+            new List<string>{"a","b","c","d","e","f","g"},
+            new List<string>{"a1","b1","c1","d1","e1","f1","g1"}
+        };
+        m_strTitleList = new List<string> { "A", "B", "C", "D", "E", "F", "G" };
+    }
+
+}

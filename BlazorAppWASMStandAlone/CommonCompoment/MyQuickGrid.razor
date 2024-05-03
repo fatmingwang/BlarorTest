@@ -1,10 +1,10 @@
 ﻿@page "/MyQuickGrid"
 
 
-<div class="grid">
+<div class="grid" tabindex="-1">
     @if (m_QuickDataForShow != null)
     {
-        <QuickGrid Items="@m_QuickDataForShow">
+        <QuickGrid Items="@m_QuickDataForShow" >
             @foreach (var b in m_QuickDataForShow)
             {
             //Test(b);
@@ -25,6 +25,8 @@
 
 @code
 {
+    //for virtualizing(keep append data to last)
+    //https://aspnet.github.io/quickgridsamples/virtualizing
     //if you want to do button things check below out
     //https://aspnet.github.io/quickgridsamples/columns
     [Parameter]

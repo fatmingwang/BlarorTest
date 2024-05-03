@@ -1,6 +1,18 @@
 ﻿<h3>FetchServerDataToDataGrid</h3>
 
-<BlazorAppWASMStandAlone.CommonCompoment.MyQuickGrid m_GridDataListList="@m_GridDataListList" m_strTitleList="@m_strTitleList" />
+<div class="grid" tabindex="-1">
+    <BlazorAppWASMStandAlone.CommonCompoment.MyQuickGrid m_GridDataListList="@m_GridDataListList" m_strTitleList="@m_strTitleList" />
+@*     <style>
+        h1 {
+            color: red;
+            font-style: italic;
+            text-shadow: 2px 2px 2px gray;
+        }
+    </style> *@
+</div>
+
+<h1>Blazor App</h1>
+
 
 @code {
     public List<List<string>> m_GridDataListList;

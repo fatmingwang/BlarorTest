@@ -1,5 +1,7 @@
 ﻿@page "/FilterSelect"
+
 @inject HttpClient Http
+@inherits cFilterSelect
 
 @if(m_SelectNameAndSelectOptionTextMap != null)
 {
@@ -10,7 +12,7 @@
         </h3>
     }
 }
-
+@* 
 @code 
 {
     public List<string> m_SelectArrayName = new List<string> {"qoo","ooq","pp" };
@@ -23,7 +25,14 @@
 
     protected override async Task OnInitializedAsync()
     {
-        string l_Data = await Http.GetStringAsync("sample-data/weather.json");
+        string l_Data = await Http.GetStringAsync("data/StatementSelectArray.json");
+        JObject jsonObject = JObject.Parse(l_Data);
+        JObject l_Data = jsonObject.GetValue("data") as JObject;
+        if (l_Data != null)
+        {
+            String l_strToken = l_Data.GetValue("token").ToString();
+            m_strToken = l_strToken;
+        }
         Console.WriteLine(l_Data);
         //var forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
     }
@@ -34,4 +43,4 @@
             //SelectedCars = (string[])e.Value;
         }
     }
-}
+} *@

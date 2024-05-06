@@ -1,0 +1,13 @@
+{
+  "SelectArray": {
+    "Platform": [ "nexus","dafa" ],
+    "Brand": [ "nexus", "dafa" ],
+    "Site": [ "nexus", "dafa" ],
+    "DisplayCurrency": [ "nexus", "dafa" ],
+    "StartDate": [ "nexus", "dafa" ],
+    "EndDate": [ "nexus", "dafa" ],
+    "TimeZone": [ "nexus", "dafa" ],
+    "WalletType": [ "nexus", "dafa" ],
+    "AcountType": [ "nexus", "dafa" ]
+  }
+}

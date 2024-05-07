@@ -7,40 +7,11 @@
 {
     foreach(var item in m_SelectNameAndSelectOptionTextMap)
     {
-        <h3>
-            <BlazorAppWASMStandAlone.CommonCompoment.MySelect m_strSelectLabel="@item.Key" m_SelectTextArray="@item.Value"/>
-        </h3>
+        <BlazorAppWASMStandAlone.CommonCompoment.MySelect m_strSelectLabel="@item.Key" m_SelectTextArray="@item.Value"/>
     }
+@*     https://demos.blazorbootstrap.com/form/date-input *@
+@*     <div class="mb-3">
+        <DateInput TValue="DateOnly" @bind-Value="@date2" Placeholder="Enter Date" />
+    </div>
+    <div class="mb-3">Entered date: @date1</div> *@
 }
-@* 
-@code 
-{
-    public List<string> m_SelectArrayName = new List<string> {"qoo","ooq","pp" };
-    public Dictionary<string, List<string>> m_SelectNameAndSelectOptionTextMap = new Dictionary<string, List<string>>()
-    {
-        {"qoo",new List<string>{"123","456"} },
-        {"666",new List<string>{"999","888"} }
-    };
-
-
-    protected override async Task OnInitializedAsync()
-    {
-        string l_Data = await Http.GetStringAsync("data/StatementSelectArray.json");
-        JObject jsonObject = JObject.Parse(l_Data);
-        JObject l_Data = jsonObject.GetValue("data") as JObject;
-        if (l_Data != null)
-        {
-            String l_strToken = l_Data.GetValue("token").ToString();
-            m_strToken = l_strToken;
-        }
-        Console.WriteLine(l_Data);
-        //var forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
-    }
-    private void SelectedCarsChanged(ChangeEventArgs e)
-    {
-        if (e.Value is not null)
-        {
-            //SelectedCars = (string[])e.Value;
-        }
-    }
-} *@

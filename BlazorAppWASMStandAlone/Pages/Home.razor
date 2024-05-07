@@ -1,5 +1,5 @@
 ﻿@page "/"
-
+@inject CommonFunction.MyCommonFunction g_MyCommonFunction
 @inject BlazorSpinner.SpinnerService _spinnerService
 
 <BlazorAppWASMStandAlone.Pages.LoadingSpinner.Spinner/>
@@ -46,8 +46,12 @@
 
 @code 
 {
+
+    //using BlazorAppWASMStandAlone.CommonFunction;
+    [Inject]
+    public NavigationManager m_NavigationManager { get; set; } = default!;
     protected override void OnInitialized()
     {
-
+        g_MyCommonFunction.m_NavigationManager = m_NavigationManager;
     }
 }

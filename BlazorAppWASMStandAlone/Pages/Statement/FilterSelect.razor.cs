@@ -5,13 +5,16 @@ using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 using static System.Net.WebRequestMethods;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Linq;
+using BlazorAppWASMStandAlone.CommonFunction;
+using System;
 namespace BlazorAppWASMStandAlone.Pages.Statement
 {
     public partial class cFilterSelect : ComponentBase
     {
+        public DateOnly date1 = DateOnly.FromDateTime(DateTime.Now.AddDays(1));
+        public DateTime date2 = DateTime.Now;
         [Inject]
-        public NavigationManager NavigationManager { get; set; } = default!;
-        //@inject NavigationManager Navigator
+        CommonFunction.MyCommonFunction g_MyCommonFunction { get; set; } = default!;
         //<p> @Navigator.BaseUri</p>
         public List<string> m_SelectArrayName = new List<string> { "qoo", "ooq", "pp" };
         public Dictionary<string, List<string>> m_SelectNameAndSelectOptionTextMap = new Dictionary<string, List<string>>()
@@ -21,39 +24,20 @@ namespace BlazorAppWASMStandAlone.Pages.Statement
         };
         protected override async Task OnInitializedAsync()
         {
-            using (var httpClient = new HttpClient())
+            string l_str = await g_MyCommonFunction.GetFileStringAsync("Data/StatementSelectArray.json");
+            if(l_str != null)
             {
-                    //{
-                    //  "SelectArray": {
-                    //    "Platform": [ "nexus,dafa" ],
-                    //    "Brand": [ "nexus,dafa" ],
-                    //    "Site": [ "nexus,dafa" ],
-                    //    "DisplayCurrency": [ "nexus,dafa" ],
-                    //    "StartDate": [ "nexus,dafa" ],
-                    //    "EndDate": [ "nexus,dafa" ],
-                    //    "TimeZone": [ "nexus,dafa" ],
-                    //    "WalletType": [ "nexus,dafa" ],
-                    //    "AcountType": [ "nexus,dafa" ]
-                    //  }
-                    //}
-
-                string l_strURI = NavigationManager.BaseUri+ "Data/StatementSelectArray.json";
-                string l_StatementSelectArrayData = await httpClient.GetStringAsync(l_strURI);
-                //string l_StatementSelectArrayData = await httpClient.GetStringAsync("sample-data/weather.json");
-                JObject jsonObject = JObject.Parse(l_StatementSelectArrayData);
+                JObject jsonObject = JObject.Parse(l_str);
                 JObject l_Data = jsonObject.GetValue("SelectArray") as JObject;
-                foreach(var l_Object in l_Data)
+                m_SelectNameAndSelectOptionTextMap.Clear();
+                foreach (var l_Object in l_Data)
                 {
                     string l_strAll = l_Object.ToString();
-                    string l_strKey = l_Object.ToString();
-
+                    string l_strKey = l_Object.Key.ToString();
                     List<string> l_Array = l_Object.Value.ToObject<List<string>>();
-                    //l_Array.Count();
-
-
+                    m_SelectNameAndSelectOptionTextMap[l_strKey] = l_Array;
                 }
                 Console.WriteLine(l_Data);
-                //var forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
             }
         }
 

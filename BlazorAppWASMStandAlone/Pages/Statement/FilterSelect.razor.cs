@@ -12,6 +12,7 @@ namespace BlazorAppWASMStandAlone.Pages.Statement
 {
     public partial class cFilterSelect : ComponentBase
     {
+        public bool m_bTimeSetup = false;
         [Parameter]
         public bool IsDisabled { get; set; }
 
@@ -20,22 +21,23 @@ namespace BlazorAppWASMStandAlone.Pages.Statement
         [Parameter]
         public EventCallback<DateTime> DateAndTimeChanged { get; set; }
         [Parameter]
-        public DateTime DateAndTime { get; set; }
+        public DateTime m_DateAndTime { get; set; } = DateTime.Now;
         private Task NotifyChanged()
         {
-            return DateAndTimeChanged.InvokeAsync(DateAndTime);
+            return DateAndTimeChanged.InvokeAsync(m_DateAndTime);
         }
 
-        public DateTime SelectedDateTime = new DateTime(2038, 1, 20, 10, 20, 30);  
+        //public DateTime SelectedDateTime = new DateTime(2038, 1, 20, 10, 20, 30);  
+        public DateTime m_SelectedDateTime = DateTime.Now;
         public int SecondOfDay
         {
             get
             {
-                return DateAndTime.Hour * 3600 + DateAndTime.Minute * 60;
+                return m_DateAndTime.Hour * 3600 + m_DateAndTime.Minute * 60;
             }
             set
             {
-                DateAndTime = DateAndTime.Date.AddSeconds(value);
+                m_DateAndTime = m_DateAndTime.Date.AddSeconds(value);
                 _ = NotifyChanged();
             }
         }
@@ -69,6 +71,7 @@ namespace BlazorAppWASMStandAlone.Pages.Statement
                 }
                 Console.WriteLine(l_Data);
             }
+            m_bTimeSetup = true;
         }
 
         private void SelectedCarsChanged(ChangeEventArgs e)

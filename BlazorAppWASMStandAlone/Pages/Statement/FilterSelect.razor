@@ -5,6 +5,21 @@
 
 @if(m_SelectNameAndSelectOptionTextMap != null)
 {
+    <h1>
+        <BlazorAppWASMStandAlone.CommonCompoment.TimePickerComponent @bind-SecondOfDay="SecondOfDay" UseNativeTimePicker="@UseNative" IsDisabled="IsDisabled" />
+    </h1>
+@*     <h1>
+        <BlazorAppWASMStandAlone.CommonCompoment.DateTimePickerComponent />
+    </h1> *@
+    <p>
+        <BlazorAppWASMStandAlone.CommonCompoment.DateTimePickerComponent @bind-DateAndTime="SelectedDateTime" UseNative="@UseNative" IsDisabled="IsDisabled" />
+    </p>
+@*     <h1>
+        <BlazorAppWASMStandAlone.CommonCompoment.DateTimePickerComponent />
+    </h1>
+    <h1>
+        <BlazorAppWASMStandAlone.CommonCompoment.TimePickerComponent/>
+    </h1> *@
     foreach(var item in m_SelectNameAndSelectOptionTextMap)
     {
         <BlazorAppWASMStandAlone.CommonCompoment.MySelect m_strSelectLabel="@item.Key" m_SelectTextArray="@item.Value"/>

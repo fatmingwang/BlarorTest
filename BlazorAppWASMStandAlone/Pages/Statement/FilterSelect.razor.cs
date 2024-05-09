@@ -7,12 +7,42 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Linq;
 using BlazorAppWASMStandAlone.CommonFunction;
 using System;
+
 namespace BlazorAppWASMStandAlone.Pages.Statement
 {
     public partial class cFilterSelect : ComponentBase
     {
-        public DateOnly date1 = DateOnly.FromDateTime(DateTime.Now.AddDays(1));
-        public DateTime date2 = DateTime.Now;
+        [Parameter]
+        public bool IsDisabled { get; set; }
+
+        [Parameter]
+        public bool UseNative { get; set; }
+        [Parameter]
+        public EventCallback<DateTime> DateAndTimeChanged { get; set; }
+        [Parameter]
+        public DateTime DateAndTime { get; set; }
+        private Task NotifyChanged()
+        {
+            return DateAndTimeChanged.InvokeAsync(DateAndTime);
+        }
+
+        public DateTime SelectedDateTime = new DateTime(2038, 1, 20, 10, 20, 30);  
+        public int SecondOfDay
+        {
+            get
+            {
+                return DateAndTime.Hour * 3600 + DateAndTime.Minute * 60;
+            }
+            set
+            {
+                DateAndTime = DateAndTime.Date.AddSeconds(value);
+                _ = NotifyChanged();
+            }
+        }
+        //====================
+
+        //public DateOnly date1 = DateOnly.FromDateTime(DateTime.Now.AddDays(1));
+        //public DateTime date2 = DateTime.Now;
         [Inject]
         CommonFunction.MyCommonFunction g_MyCommonFunction { get; set; } = default!;
         //<p> @Navigator.BaseUri</p>

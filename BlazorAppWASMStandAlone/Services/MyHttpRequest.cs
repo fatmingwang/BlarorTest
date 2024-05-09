@@ -82,5 +82,39 @@ namespace BlazorAppWASMStandAlone.Services
 				}
 			}
 		}
-	}
+
+        public static async Task BOHistory()
+        {
+            string l_strURI = "https://devapi.diresoft.net/web/history/ticket?platform=nexus&ticketNo=a5RXdJD9MjCT8l&encoderequired=1";
+            //var encodedContent = new StringContent("platform=nexus&ticketNo=a5RXdJD9MjCT8l&encoderequired=1", Encoding.UTF8, "text/plain");
+            using (var httpClient = new HttpClient())
+            {
+				try
+				{
+					var response2 = await httpClient.GetAsync(l_strURI).ConfigureAwait(false);
+					HttpStatusCode l_Code = response2.StatusCode;
+					if (response2.StatusCode == HttpStatusCode.OK)
+					{
+						//https://stackoverflow.com/questions/50884968/how-to-access-children-values-of-a-jobject
+						var content = await response2.Content.ReadAsStringAsync();
+						JObject jsonObject = JObject.Parse(content);
+						JObject l_Data = jsonObject.GetValue("data") as JObject;
+						if (l_Data != null)
+						{
+							String l_strToken = l_Data.GetValue("token").ToString();
+							m_strToken = l_strToken;
+						}
+					}
+					else
+					{
+
+					}
+				}
+				catch(Exception ex) 
+				{
+					Console.WriteLine("CROS?? "+ ex.ToString());
+				}
+            }
+        }
+    }
 }
